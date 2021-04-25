@@ -39,6 +39,8 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Colors.purple,
         centerTitle: true,
       ),
+      // wrap Column inside SingleChildScrollView at the body leve for fullpage scrolling
+      // or add scrolling to a particula widget alone as transactionList widget
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
