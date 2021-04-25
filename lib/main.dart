@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import './transaction.dart';
-import 'package:intl/intl.dart';
-// import 'package:uuid/uuid.dart';
+import './widgets/user_transaction.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,26 +31,6 @@ class MyApp extends StatelessWidget {
 
 // Only Stateless widget is needed
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    )
-  ];
-  // var uuid = Uuid();
-  String titleInput;
-  String amountInput;
-  // String id1 = uuid.v4();
-  // String id = Uuid().v4();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,97 +46,14 @@ class MyHomePage extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Card(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
-                      onChanged: (value) {
-                        titleInput = value;
-                      },
-                    ),
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Amount'),
-                      onChanged: (val) => amountInput = val,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        print(titleInput);
-                        print(amountInput);
-                        // transactions.add(
-                        //   Transaction(
-                        //     id: 't3',
-                        //     title: titleInput,
-                        //     amount: 12.99,
-                        //     date: DateTime.now(),
-                        //   ),
-                        // );
-                        // print(transactions.toList());
-                      },
-                      child: Text('Add Transaction'),
-                      style: TextButton.styleFrom(
-                        primary: Colors.purple,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              color: Colors.blue,
+              child: Text('CHART!'),
               elevation: 5,
             ),
           ),
-          Column(
-            children: transactions.map((tx) {
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        '£' + tx.amount.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          tx.title.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.purple,
-                          ),
-                        ),
-                        Text(
-                          DateFormat().add_yMMMd().format(tx.date),
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+          UserTransactions()
+          // NewTransaction(),
+          // TransactionalList(),
         ],
       ),
     );
