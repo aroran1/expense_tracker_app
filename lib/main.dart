@@ -23,17 +23,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.purple,
+          accentColor: Colors.deepPurple),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: MyHomePage(),
     );
@@ -92,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expense Tracker'),
-        backgroundColor: Colors.purple,
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -110,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             width: double.infinity,
             child: Card(
-              color: Colors.blue,
+              color: Theme.of(context).primaryColorLight,
               child: Text('CHART!'),
               elevation: 5,
             ),
