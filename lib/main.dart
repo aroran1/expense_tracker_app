@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './transaction.dart';
 import 'package:intl/intl.dart';
+// import 'package:uuid/uuid.dart';
 
 void main() {
   runApp(MyApp());
@@ -46,22 +47,64 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     )
   ];
+  // var uuid = Uuid();
+  String titleInput;
+  String amountInput;
+  // String id1 = uuid.v4();
+  // String id = Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter App'),
+        title: Text('Expense Tracker'),
+        backgroundColor: Colors.purple,
+        centerTitle: true,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
             width: double.infinity,
             child: Card(
-              color: Colors.blue,
-              child: Text('Chart!'),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                      onChanged: (value) {
+                        titleInput = value;
+                      },
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Amount'),
+                      onChanged: (val) => amountInput = val,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        print(titleInput);
+                        print(amountInput);
+                        // transactions.add(
+                        //   Transaction(
+                        //     id: 't3',
+                        //     title: titleInput,
+                        //     amount: 12.99,
+                        //     date: DateTime.now(),
+                        //   ),
+                        // );
+                        // print(transactions.toList());
+                      },
+                      child: Text('Add Transaction'),
+                      style: TextButton.styleFrom(
+                        primary: Colors.purple,
+                      ),
+                    )
+                  ],
+                ),
+              ),
               elevation: 5,
             ),
           ),
