@@ -33,7 +33,27 @@ class _MyAppState extends State<MyApp> {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.purple,
-          accentColor: Colors.deepPurple),
+          accentColor: Colors.deepPurple,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline3: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                bodyText1: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                  ),
+                ),
+          )),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: MyHomePage(),
     );
@@ -91,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Tracker'),
+        title:
+            Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
