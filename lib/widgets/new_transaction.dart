@@ -16,10 +16,14 @@ class _NewTransactionState extends State<NewTransaction> {
   DateTime _selectedDate;
 
   void _submitData() {
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
 
@@ -27,6 +31,7 @@ class _NewTransactionState extends State<NewTransaction> {
     widget.handleAddTransaction(
       enteredTitle,
       enteredAmount,
+      _selectedDate,
     );
 
     // closes the top most layer

@@ -1,11 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionalList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTx;
 
-  TransactionalList(this.transactions);
+  TransactionalList(this.transactions, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class TransactionalList extends StatelessWidget {
     // ListView.builder: []) = not like SingleChildScrollView renders only visible list and renders / build only whats visible (built in lazy load machaism), suitable for large lists
     // ListView.builder: []) comes with itemBuider: (builderContext (returns the item), index as int) and itemCount: XYZ.length so it can count upfornt the item that'll be visible
     return Container(
-      height: 450,
+      height: 430,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -38,10 +41,10 @@ class TransactionalList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 5,
+                  elevation: 8,
                   margin: EdgeInsets.symmetric(
-                    vertical: 5,
-                    horizontal: 5,
+                    vertical: 10,
+                    horizontal: 10,
                   ),
                   child: ListTile(
                     leading: CircleAvatar(
@@ -62,6 +65,13 @@ class TransactionalList extends StatelessWidget {
                       DateFormat.yMMMd().format(
                         transactions[index].date,
                       ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                      ),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deleteTx(transactions[index].id),
                     ),
                   ),
                 );

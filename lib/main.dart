@@ -38,9 +38,11 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline3: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                  fontFamily: 'OpenSans',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
                 bodyText1: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
@@ -91,12 +93,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+    String txTitle,
+    double txAmount,
+    DateTime selectedDate,
+  ) {
     final newTx = Transaction(
       id: Uuid().v4(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: selectedDate,
     );
 
     setState(() {
@@ -115,6 +121,12 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -147,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // UserTransactions()
           // NewTransaction(),
-          TransactionalList(_userTransactions),
+          TransactionalList(_userTransactions, _deleteTransaction),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
