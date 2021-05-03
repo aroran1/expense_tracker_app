@@ -1,6 +1,8 @@
+import 'package:expense_tracker_app/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
@@ -37,21 +39,38 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get totalSpending {
+    return groupedTransactionValues.fold(
+        0.0, (sum, item) => sum + item['amount']);
+  }
+
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
         child: Row(
-            children: groupedTransactionValues.map((data) {
-          return Text('${data['day']}: ${data['amount']}');
-        }).toList()
-            // <Widget>[
-            //   Column(),
-            // ],
-            ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((data) {
+            // return Text('${data['day']}: ${data['amount']}');
+            return Flexible(
+              // you can use Flex to distribute the space between the child widgets
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  data['day'],
+                  data['amount'],
+                  totalSpending == 0.0
+                      ? 0.0
+                      : (data['amount'] as double) / totalSpending),
+            );
+          }).toList(),
+          // <Widget>[
+          //   Column(),
+          // ],
+        ),
       ),
     );
   }
