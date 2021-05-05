@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 import './models/transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
-import './widgets/charts.dart';
+import 'widgets/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,18 +73,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Weekly Groceries',
+    //   amount: 16.53,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -131,18 +131,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
+      centerTitle: true,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _showAddNewTransaction(context),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title:
-            Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _showAddNewTransaction(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       // wrap Column inside SingleChildScrollView at the body leve for fullpage scrolling
       // or add scrolling to a particula widget alone as transactionList widget
       body: Column(
@@ -151,6 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Container(
             width: double.infinity,
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.3,
             child: Card(
               color: Theme.of(context).primaryColorLight,
               child: Chart(_recentTransactions),
@@ -159,7 +163,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // UserTransactions()
           // NewTransaction(),
-          TransactionalList(_userTransactions, _deleteTransaction),
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.7,
+            child: TransactionalList(_userTransactions, _deleteTransaction),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

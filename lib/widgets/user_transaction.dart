@@ -11,6 +11,12 @@ class UserTransactions extends StatefulWidget {
 }
 
 class _UserTransactionsState extends State<UserTransactions> {
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   final List<Transaction> _userTransactions = [
     Transaction(
       id: 't1',
@@ -44,7 +50,7 @@ class _UserTransactionsState extends State<UserTransactions> {
     return Column(
       children: <Widget>[
         NewTransaction(_addNewTransaction),
-        TransactionalList(_userTransactions),
+        TransactionalList(_userTransactions, _deleteTransaction),
       ],
     );
   }
