@@ -38,18 +38,23 @@ class TransactionalList extends StatelessWidget {
             itemBuilder: (context, index) {
               return Card(
                 elevation: 8,
-                margin: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 10,
-                ),
+                // margin: EdgeInsets.symmetric(
+                //   vertical: 10,
+                //   horizontal: 10,
+                // ),
                 child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  dense: true,
+                  // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
                   leading: CircleAvatar(
-                    radius: 30,
+                    radius: 40,
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(0),
                       child: FittedBox(
                         child: Text(
-                            '\£${transactions[index].amount.toStringAsFixed(2)}'),
+                          '\£${transactions[index].amount.toStringAsFixed(2)}',
+                          textScaleFactor: 0.8,
+                        ),
                       ),
                     ),
                   ),
