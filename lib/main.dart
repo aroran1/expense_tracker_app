@@ -1,5 +1,5 @@
-import 'package:expense_tracker_app/widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 
 // import './widgets/user_transaction.dart';
@@ -9,6 +9,10 @@ import './widgets/transaction_list.dart';
 import 'widgets/chart.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(MyApp());
 }
 
