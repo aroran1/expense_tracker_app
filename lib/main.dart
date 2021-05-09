@@ -9,10 +9,10 @@ import './widgets/transaction_list.dart';
 import 'widgets/chart.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitUp,
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitUp,
+  // ]);
   runApp(MyApp());
 }
 
@@ -91,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
@@ -135,6 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
       centerTitle: true,
@@ -145,6 +149,13 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     );
+    final _txListWidget = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7,
+      child: TransactionalList(_userTransactions, _deleteTransaction),
+    );
     return Scaffold(
       appBar: appBar,
       // wrap Column inside SingleChildScrollView at the body leve for fullpage scrolling
@@ -153,27 +164,52 @@ class _MyHomePageState extends State<MyHomePage> {
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.3,
-            child: Card(
-              color: Theme.of(context).primaryColorLight,
-              child: Chart(_recentTransactions),
-              elevation: 5,
+          if (_isLandScape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Show chart'),
+                Switch(
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  },
+                )
+              ],
             ),
-          ),
-          // UserTransactions()
-          // NewTransaction(),
-          Container(
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.7,
-            child: TransactionalList(_userTransactions, _deleteTransaction),
-          ),
+          if (!_isLandScape)
+            Container(
+              width: double.infinity,
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Card(
+                color: Theme.of(context).primaryColorLight,
+                child: Chart(_recentTransactions),
+                elevation: 5,
+              ),
+            ),
+          if (!_isLandScape) _txListWidget,
+          if (_isLandScape)
+            _showChart
+                ? Container(
+                    width: double.infinity,
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.3,
+                    child: Card(
+                      color: Theme.of(context).primaryColorLight,
+                      child: Chart(_recentTransactions),
+                      elevation: 5,
+                    ),
+                  )
+                // UserTransactions()
+                // NewTransaction(),
+                : _txListWidget,
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -16,24 +16,30 @@ class TransactionalList extends StatelessWidget {
     // ListView.builder: []) = not like SingleChildScrollView renders only visible list and renders / build only whats visible (built in lazy load machaism), suitable for large lists
     // ListView.builder: []) comes with itemBuider: (builderContext (returns the item), index as int) and itemCount: XYZ.length so it can count upfornt the item that'll be visible
     return transactions.isEmpty
-        ? Column(
-            children: <Widget>[
-              SizedBox(height: 40),
-              Text(
-                'No transactions added yet!',
-                style: Theme.of(context).textTheme.bodyText1,
-                // style: TextStyle(backgroundColor: Colors.black87)
-              ),
-              SizedBox(height: 40),
-              Container(
-                height: 140,
-                child: Image.asset(
-                  'assets/images/waiting.png',
-                  fit: BoxFit.fill,
+        ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(
+              children: <Widget>[
+                SizedBox(
+                  height: constraints.maxHeight * 0.1,
                 ),
-              ),
-            ],
-          )
+                Text(
+                  'No transactions added yet!',
+                  style: Theme.of(context).textTheme.bodyText1,
+                  // style: TextStyle(backgroundColor: Colors.black87)
+                ),
+                SizedBox(
+                  height: constraints.maxHeight * 0.1,
+                ),
+                Container(
+                  height: constraints.maxHeight * 0.6,
+                  child: Image.asset(
+                    'assets/images/waiting.png',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            );
+          })
         : ListView.builder(
             itemBuilder: (context, index) {
               return Card(
