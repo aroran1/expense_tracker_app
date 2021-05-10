@@ -137,8 +137,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    // by storing media query once you don't need to retap into object and cost performance
+    final mediaQuery = MediaQuery.of(context);
+    final _isLandScape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
       centerTitle: true,
@@ -150,9 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
     final _txListWidget = Container(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.7,
       child: TransactionalList(_userTransactions, _deleteTransaction),
     );
@@ -182,9 +183,9 @@ class _MyHomePageState extends State<MyHomePage> {
           if (!_isLandScape)
             Container(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height -
+              height: (mediaQuery.size.height -
                       appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
+                      mediaQuery.padding.top) *
                   0.3,
               child: Card(
                 color: Theme.of(context).primaryColorLight,
@@ -197,9 +198,9 @@ class _MyHomePageState extends State<MyHomePage> {
             _showChart
                 ? Container(
                     width: double.infinity,
-                    height: (MediaQuery.of(context).size.height -
+                    height: (mediaQuery.size.height -
                             appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
+                            mediaQuery.padding.top) *
                         0.8,
                     child: Card(
                       color: Theme.of(context).primaryColorLight,
