@@ -43,7 +43,7 @@ class TransactionalList extends StatelessWidget {
         : ListView.builder(
             itemBuilder: (context, index) {
               return Card(
-                elevation: 8,
+                elevation: 7,
                 // margin: EdgeInsets.symmetric(
                 //   vertical: 10,
                 //   horizontal: 10,
@@ -53,13 +53,13 @@ class TransactionalList extends StatelessWidget {
                   dense: true,
                   // visualDensity: VisualDensity(horizontal: 0, vertical: -2),
                   leading: CircleAvatar(
-                    radius: 40,
+                    radius: 35,
                     child: Padding(
                       padding: EdgeInsets.all(0),
                       child: FittedBox(
                         child: Text(
                           '\£${transactions[index].amount.toStringAsFixed(2)}',
-                          textScaleFactor: 0.8,
+                          textScaleFactor: 0.9,
                         ),
                       ),
                     ),
@@ -73,13 +73,21 @@ class TransactionalList extends StatelessWidget {
                       transactions[index].date,
                     ),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                    ),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => deleteTx(transactions[index].id),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 400
+                      ? TextButton.icon(
+                          onPressed: () => deleteTx(transactions[index].id),
+                          label: Text('Delete'),
+                          icon: Icon(
+                            Icons.delete,
+                          ),
+                        )
+                      : IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                          ),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => deleteTx(transactions[index].id),
+                        ),
                 ),
               );
               // return Card(
