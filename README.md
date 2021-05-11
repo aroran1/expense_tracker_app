@@ -1,6 +1,6 @@
 # Expense Tracker App
 
-A new Flutter project.
+A new Flutter / Dart project runs for both Android and iOS as app.
 
 ## Getting Started
 
