@@ -4,7 +4,7 @@ A new Flutter / Dart project runs for both Android and iOS as app.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application with a single screen to show a chart (7 day expense bar) with the list of transactions. It provides with the fuccationality of adding transactions and delete any entry.
 
 A few resources to get you started if this is your first Flutter project:
 
