@@ -1,10 +1,12 @@
 # Expense Tracker App
 
-A new Flutter / Dart project runs for both Android and iOS as app.
+A Flutter / Dart app which runs on both Android, iOS and web devices as their native application. 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application with a single screen to show a chart (7 day expense bar) with the list of transactions. It provides with the fuccationality of adding transactions and delete any entry.
+This is a single screen flutter application to log users daily transactions and represents them in a chart (7 day expense bar) as well as a list of all transactions. It provides with the functionality of adding transactions on a particular date, shows daily total oof last 7 days on the chart and deleting an entry.
+
+This application also makes you aware of device specific and orientation specific changes as well as builds good undertsanding of flutter widgets and its packages.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -13,8 +15,8 @@ A few resources to get you started if this is your first Flutter project:
 - [https://www.atlassian.com/git/tutorials/setting-up-a-repository](https://flutter.dev/docs/development/ui/widgets)
 - [https://github.com/packtpublishing/learn-flutter-and-dart-to-build-ios-and-android-apps](https://github.com/packtpublishing/learn-flutter-and-dart-to-build-ios-and-android-apps)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+For help getting started with Flutter, view 
+[Flutter's online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
 - Start local app to run on android via Android Studio > AVG Manager
