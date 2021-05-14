@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/cupertino.dart';
 
 // import './widgets/user_transaction.dart';
 import './models/transaction.dart';
@@ -142,16 +142,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // by storing media query once you don't need to retap into object and cost performance
     final mediaQuery = MediaQuery.of(context);
     final _isLandScape = mediaQuery.orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text('Expense Tracker', style: TextStyle(fontFamily: 'OpenSans')),
-      centerTitle: true,
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _showAddNewTransaction(context),
-        )
-      ],
-    );
+    final PreferredSize appBar = Platform.isIOS()
+        ? CupertinoNavigationBar(
+            middle: Text('Personal Expenses'),
+            trailing: Row(
+              children: <Widget>[
+                // IconButton(
+                //   icon: Icon(Icon.add),
+                //   onPressed: () => _showAddNewTransaction(context),
+                // ),
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text('Expense Tracker',
+                style: TextStyle(fontFamily: 'OpenSans')),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _showAddNewTransaction(context),
+              )
+            ],
+          );
     final _txListWidget = Container(
       height: (mediaQuery.size.height -
               appBar.preferredSize.height -
@@ -159,71 +172,77 @@ class _MyHomePageState extends State<MyHomePage> {
           0.7,
       child: TransactionalList(_userTransactions, _deleteTransaction),
     );
-    return Scaffold(
-      appBar: appBar,
-      // wrap Column inside SingleChildScrollView at the body leve for fullpage scrolling
-      // or add scrolling to a particula widget alone as transactionList widget
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          if (_isLandScape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Show chart'),
-                Switch.adaptive(
-                  activeColor: Theme.of(context).accentColor,
-                  value: _showChart,
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = val;
-                    });
-                  },
+    final pagebody = Column(
+      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        if (_isLandScape)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Show chart'),
+              Switch.adaptive(
+                activeColor: Theme.of(context).accentColor,
+                value: _showChart,
+                onChanged: (val) {
+                  setState(() {
+                    _showChart = val;
+                  });
+                },
+              )
+            ],
+          ),
+        if (!_isLandScape)
+          Container(
+            width: double.infinity,
+            height: (mediaQuery.size.height -
+                    appBar.preferredSize.height -
+                    mediaQuery.padding.top) *
+                0.3,
+            child: Card(
+              color: Theme.of(context).primaryColorLight,
+              child: Chart(_recentTransactions),
+              elevation: 5,
+            ),
+          ),
+        if (!_isLandScape) _txListWidget,
+        if (_isLandScape)
+          _showChart
+              ? Container(
+                  width: double.infinity,
+                  height: (mediaQuery.size.height -
+                          appBar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.8,
+                  child: Card(
+                    color: Theme.of(context).primaryColorLight,
+                    child: Chart(_recentTransactions),
+                    elevation: 5,
+                  ),
                 )
-              ],
-            ),
-          if (!_isLandScape)
-            Container(
-              width: double.infinity,
-              height: (mediaQuery.size.height -
-                      appBar.preferredSize.height -
-                      mediaQuery.padding.top) *
-                  0.3,
-              child: Card(
-                color: Theme.of(context).primaryColorLight,
-                child: Chart(_recentTransactions),
-                elevation: 5,
-              ),
-            ),
-          if (!_isLandScape) _txListWidget,
-          if (_isLandScape)
-            _showChart
-                ? Container(
-                    width: double.infinity,
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.8,
-                    child: Card(
-                      color: Theme.of(context).primaryColorLight,
-                      child: Chart(_recentTransactions),
-                      elevation: 5,
-                    ),
-                  )
-                // UserTransactions()
-                // NewTransaction(),
-                : _txListWidget,
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () => _showAddNewTransaction(context),
-            ),
+              // UserTransactions()
+              // NewTransaction(),
+              : _txListWidget,
+      ],
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: pagebody,
+            navigationBar: appBar,
+          )
+        : Scaffold(
+            appBar: appBar,
+            // wrap Column inside SingleChildScrollView at the body leve for fullpage scrolling
+            // or add scrolling to a particula widget alone as transactionList widget
+            body: pagebody,
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () => _showAddNewTransaction(context),
+                  ),
+          );
   }
 }
 
