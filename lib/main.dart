@@ -146,11 +146,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ? CupertinoNavigationBar(
             middle: Text('Personal Expenses'),
             trailing: Row(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 // IconButton(
                 //   icon: Icon(Icon.add),
                 //   onPressed: () => _showAddNewTransaction(context),
                 // ),
+                GestureDetector(
+                  child: Icon(CupertinoIcons.add),
+                  onTap: () => _showAddNewTransaction(context),
+                )
               ],
             ),
           )
